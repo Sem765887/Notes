@@ -14,7 +14,7 @@
     <div id="app">
         <div class="column">
             <h2>Первый стобец</h2>
-            <button>Добавить карточку</button>
+            <button @click="openForm(1)" :disabled="columns[0].cards.length >= 3">Добавить карточку</button>
         </div>
         <div class="column">
             <h2>Второй стобец</h2>
@@ -23,18 +23,18 @@
             <h2>Третий стобец</h2>
         </div>
 
-        <div class="form-overlay">
+        <div v-if="showForm" class="form-overlay">
             <div class="form-container">
                 <h3>Создать карточку</h3>
-                <input type="text" placeholder="Заголовок карточки"/>
-                <div class="form-item">
-                    <input type="text" placeholder="Пункт списка" />
-                    <button>-</button>
-                    <button>+</button>
-                    <div class="form-buttons">
-                        <button>Сохранить</button>
-                        <button>Отмена</button>
-                    </div>
+                <input type="text" v-model="newCardTitle" placeholder="Заголовок карточки" />
+                <div v-for="(item, index) in newCardItems" :key="index" class="form-item">
+                    <input type="text" v-model="newCardItems[index]" placeholder="Пункт списка" />
+                    <button @click="removeItem(index)" v-if="newCardItems.length > 3">-</button>
+                </div>
+                <button @click="addItem" v-if="newCardItems.length < 5">+</button>
+                <div class="form-buttons">
+                    <button @click="submitForm">Сохранить</button>
+                    <button @click="closeForm">Отмена</button>
                 </div>
             </div>
         </div>
