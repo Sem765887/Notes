@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script defer src="js/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <title>Note app</title>
+</head>
+<body>
+    <div id="app">
+        <div class="column">
+            <h2>Первый стобец</h2>
+            <button>Добавить карточку</button>
+        </div>
+        <div class="column">
+            <h2>Второй стобец</h2>
+        </div>
+        <div class="column">
+            <h2>Третий стобец</h2>
+        </div>
+
+        <div class="form-overlay">
+            <div class="form-container">
+                <h3>Создать карточку</h3>
+                <input type="text" placeholder="Заголовок карточки"/>
+                <div class="form-item">
+                    <input type="text" placeholder="Пункт списка" />
+                    <button>-</button>
+                    <button>+</button>
+                    <div class="form-buttons">
+                        <button>Сохранить</button>
+                        <button>Отмена</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
