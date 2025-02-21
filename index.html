@@ -1,46 +1,47 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <script defer src="js/main.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Note App</title>
     <link rel="stylesheet" href="css/style.css">
-    <title>Note app</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script defer src="js/main.js"></script>
+
 </head>
 <body>
-    <div id="app">
-        <div class="column">
-            <h2>Первый стобец</h2>
-            <card v-for="card in columns[0].cards" :key="card.id" :card="card" @update="updateCard"></card>
-            <button @click="openForm(1)" :disabled="columns[0].cards.length >= 3">Добавить карточку</button>
-        </div>
-        <div class="column">
-            <h2>Второй стобец</h2>
-            <card v-for="card in columns[1].cards" :key="card.id" :card="card" @update="updateCard"></card>
-        </div>
-        <div class="column">
-            <h2>Третий стобец</h2>
-            <card v-for="card in columns[2].cards" :key="card.id" :card="card" @update="updateCard"></card>
-        </div>
+<div id="app">
+    <div class="column" :class="{ blocked: isColumnBlocked(1) }">
+        <h2>Первый столбец</h2>
+        <card v-for="card in columns[0].cards" :key="card.id" :card="card" @update="updateCard"></card>
+        <button @click="openForm(1)" :disabled="columns[0].cards.length >= 3">Добавить карточку</button>
+    </div>
+    <div class="column">
+        <h2>Второй столбец</h2>
+        <card v-for="card in columns[1].cards" :key="card.id" :card="card" @update="updateCard"></card>
+    </div>
+    <div class="column">
+        <h2>Третий столбец</h2>
+        <card v-for="card in columns[2].cards" :key="card.id" :card="card" @update="updateCard"></card>
+    </div>
 
-        <div v-if="showForm" class="form-overlay">
-            <div class="form-container">
-                <h3>Создать карточку</h3>
-                <input type="text" v-model="newCardTitle" placeholder="Заголовок карточки" />
-                <div v-for="(item, index) in newCardItems" :key="index" class="form-item">
-                    <input type="text" v-model="newCardItems[index]" placeholder="Пункт списка" />
-                    <button @click="removeItem(index)" v-if="newCardItems.length > 3">-</button>
-                </div>
-                <button @click="addItem" v-if="newCardItems.length < 5">+</button>
-                <div class="form-buttons">
-                    <button @click="submitForm">Сохранить</button>
-                    <button @click="closeForm">Отмена</button>
-                </div>
+    <div v-if="showForm" class="form-overlay">
+        <div class="form-container">
+            <h3>Создать карточку</h3>
+            <input type="text" v-model="newCardTitle" placeholder="Заголовок карточки" />
+            <div v-for="(item, index) in newCardItems" :key="index" class="form-item">
+                <input type="text" v-model="newCardItems[index]" placeholder="Пункт списка" />
+                <button @click="removeItem(index)" v-if="newCardItems.length > 3">-</button>
+            </div>
+            <button @click="addItem" v-if="newCardItems.length < 5">+</button>
+            <div class="form-buttons">
+                <button @click="submitForm">Сохранить</button>
+                <button @click="closeForm">Отмена</button>
             </div>
         </div>
     </div>
+</div>
+
+<script src="app.js"></script>
 </body>
 </html>
