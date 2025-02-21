@@ -58,5 +58,34 @@ new Vue({
                 alert('Заполните все поля!');
             }
         },
+        updateCard() {
+            this.columns.forEach(column => {
+                column.cards.forEach(card => {
+                    const completedCount = card.items.filter(item => item.completed).length;
+                    const totalItems = card.items.length;
+                    const completionPercentage = (completedCount / totalItems) * 100;
+
+                    if (completionPercentage > 50 && column.id === 1) {
+                        this.moveCard(card, 1, 2);
+                    }
+                    if (completionPercentage === 100) {
+                        card.completedAt = new Date().toLocaleString();
+                        this.moveCard(card, column.id, 3);
+                    }
+                });
+            });
+            this.saveData();
+        },
+        moveCard(card, fromColumnId, toColumnId) {
+            const fromColumn = this.columns.find(col => col.id === fromColumnId);
+            const toColumn = this.columns.find(col => col.id === toColumnId);
+            const cardIndex = fromColumn.cards.indexOf(card);
+
+            if (toColumn.cards.length < (toColumnId === 2 ? 5 : Infinity)) {
+                toColumn.cards.push(card);
+                fromColumn.cards.splice(cardIndex, 1);
+            }
+        },
+
     }
 })

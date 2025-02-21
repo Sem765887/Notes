@@ -14,6 +14,7 @@
     <div id="app">
         <div class="column">
             <h2>Первый стобец</h2>
+            <card v-for="card in columns[0].cards" :key="card.id" :card="card" @update="updateCard"></card>
             <button @click="openForm(1)" :disabled="columns[0].cards.length >= 3">Добавить карточку</button>
         </div>
         <div class="column">
