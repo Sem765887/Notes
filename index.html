@@ -7,24 +7,22 @@
     <link rel="stylesheet" href="css/style.css">
     <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
     <script defer src="js/main.js"></script>
-
 </head>
 <body>
 <div id="app">
     <div class="column" :class="{ blocked: isColumnBlocked(1) }">
         <h2>Первый столбец</h2>
-        <card v-for="card in columns[0].cards" :key="card.id" :card="card" @update="updateCard"></card>
-        <button @click="openForm(1)" :disabled="columns[0].cards.length >= 3">Добавить карточку</button>
+        <card v-for="card in sortedColumns[0].cards" :key="card.id" :card="card" @update="updateCard"></card>
+        <button @click="openForm(1)" :disabled="columns[0].cards.length >= 3 || (hasActivePriority && !activePriorityCardCompleted)">Добавить карточку</button>
     </div>
     <div class="column">
         <h2>Второй столбец</h2>
-        <card v-for="card in columns[1].cards" :key="card.id" :card="card" @update="updateCard"></card>
+        <card v-for="card in sortedColumns[1].cards" :key="card.id" :card="card" @update="updateCard"></card>
     </div>
     <div class="column">
         <h2>Третий столбец</h2>
-        <card v-for="card in columns[2].cards" :key="card.id" :card="card" @update="updateCard"></card>
+        <card v-for="card in sortedColumns[2].cards" :key="card.id" :card="card" @update="updateCard"></card>
     </div>
-
     <div v-if="showForm" class="form-overlay">
         <div class="form-container">
             <h3>Создать карточку</h3>
@@ -34,6 +32,12 @@
                 <button @click="removeItem(index)" v-if="newCardItems.length > 3">-</button>
             </div>
             <button @click="addItem" v-if="newCardItems.length < 5">+</button>
+            <div class="priority-checkbox">
+                <label>
+                    <input type="checkbox" v-model="newCardPriority" />
+                    Сделать карточку приоритетной
+                </label>
+            </div>
             <div class="form-buttons">
                 <button @click="submitForm">Сохранить</button>
                 <button @click="closeForm">Отмена</button>
@@ -41,7 +45,5 @@
         </div>
     </div>
 </div>
-
-<script src="app.js"></script>
 </body>
 </html>
