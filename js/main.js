@@ -27,6 +27,12 @@ new Vue({
         newCardTitle: '',
         newCardItems: ['', '', '']
     },
+    created() {
+        const savedData = localStorage.getItem('noteAppData');
+        if (savedData) {
+            this.columns = JSON.parse(savedData);
+        }
+    },
     methods: {
         openForm(columnId) {
             this.formColumnId = columnId;
@@ -86,6 +92,19 @@ new Vue({
                 fromColumn.cards.splice(cardIndex, 1);
             }
         },
-
+        saveData() {
+            localStorage.setItem('noteAppData', JSON.stringify(this.columns));
+        },
+        isColumnBlocked(columnId) {
+            if (columnId === 1) {
+                const secondColumnFull = this.columns[1].cards.length >= 5;
+                const firstColumnOver50 = this.columns[0].cards.some(card => {
+                    const completedCount = card.items.filter(item => item.completed).length;
+                    return (completedCount / card.items.length) * 100 > 50;
+                });
+                return secondColumnFull && firstColumnOver50;
+            }
+            return false;
+        }
     }
 })
